@@ -1,0 +1,43 @@
+name: Emma ICU job search scan
+
+on:
+  workflow_dispatch:
+  schedule:
+    # 8:15 AM Central during daylight saving time.
+    - cron: "15 13 * * *"
+
+permissions:
+  contents: write
+
+jobs:
+  scan:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Run scanner and listing validation
+        run: npm run scan:local
+
+      - name: Commit updated dashboard data
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add data/job-results.json data/job-search-runs.json
+          if git diff --cached --quiet; then
+            echo "No dashboard data changes."
+          else
+            git commit -m "Update Emma ICU job search data"
+            git push
+          fi

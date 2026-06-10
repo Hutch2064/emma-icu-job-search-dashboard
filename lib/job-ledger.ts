@@ -44,6 +44,10 @@ const avoidPatterns = [
     concern: "Avoid: travel, agency, contract, temporary, PRN, or per diem wording",
   },
   {
+    pattern: /\bpicu\b|\bnicu\b|pediatric|paediatric|neonatal|children'?s|childrens/i,
+    concern: "Avoid: pediatric ICU or children's hospital role",
+  },
+  {
     pattern: /no longer accepting applications|job is closed|posting closed|position has been filled|no longer available/i,
     concern: "Avoid: posting is closed or no longer accepting applications",
   },
@@ -183,6 +187,7 @@ export function isLikelyTargetPosting(posting: RawJobPosting | JobResult): boole
 
   if (!isOpenForApplications(posting)) return false;
   if (!isLocationEligible(posting.location)) return false;
+  if (avoidPatterns.some((avoid) => avoid.pattern.test(combined))) return false;
   if (!icuTitlePatterns.some((pattern) => pattern.test(posting.title))) return false;
   if (!nursingPatterns.some((pattern) => pattern.test(combined))) return false;
   if (scored.concerns.some((concern) => concern.startsWith("Avoid:"))) return false;

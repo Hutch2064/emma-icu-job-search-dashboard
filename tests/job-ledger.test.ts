@@ -131,15 +131,15 @@ describe("isLikelyTargetPosting", () => {
 
     expect(
       isLikelyTargetPosting({
-        title: "RN, CICU",
+        title: "RN, PICU",
         company: "Cook Children's",
         location: "Fort Worth, TX",
         description:
-          "Full-time registered nurse role in the cardiac intensive care unit with high-acuity critical care patients and clinical documentation responsibilities.",
-        url: "https://example.com/cicu",
+          "Full-time registered nurse role in a pediatric intensive care unit with high-acuity critical care patients and clinical documentation responsibilities.",
+        url: "https://example.com/picu",
         source: "test",
       }),
-    ).toBe(true);
+    ).toBe(false);
 
     expect(
       isLikelyTargetPosting({

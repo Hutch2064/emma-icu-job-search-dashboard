@@ -4,9 +4,13 @@ import json
 import os
 import socket
 import subprocess
+import base64
+import urllib.error
+import urllib.request
 from datetime import datetime
 from pathlib import Path
 from typing import Any
+from zoneinfo import ZoneInfo
 
 import streamlit as st
 
@@ -17,6 +21,9 @@ JOB_RESULTS_PATH = DATA_DIR / "job-results.json"
 JOB_RUNS_PATH = DATA_DIR / "job-search-runs.json"
 APP_STATE_PATH = DATA_DIR / "app-state.json"
 PUBLIC_APP_URL = "https://emma-icu-job-search-dashboard.streamlit.app"
+GITHUB_REPO = "Hutch2064/emma-icu-job-search-dashboard"
+GITHUB_BRANCH = "main"
+CENTRAL_TZ = ZoneInfo("America/Chicago")
 
 
 def is_public_streamlit_cloud() -> bool:
@@ -35,7 +42,7 @@ def format_dt(value: str | None) -> str:
         return "Not recorded"
     try:
         parsed = datetime.fromisoformat(value.replace("Z", "+00:00"))
-        return parsed.strftime("%b %-d, %Y %I:%M %p")
+        return parsed.astimezone(CENTRAL_TZ).strftime("%b %-d, %Y %-I:%M %p CT")
     except Exception:
         return value
 
@@ -71,12 +78,120 @@ def load_data() -> tuple[list[dict[str, Any]], list[dict[str, Any]], dict[str, A
     return jobs, runs, app_state
 
 
-def status_counts(jobs: list[dict[str, Any]]) -> dict[str, int]:
-    counts: dict[str, int] = {}
-    for job in jobs:
-        status = str(job.get("status", "unknown"))
-        counts[status] = counts.get(status, 0) + 1
-    return counts
+def write_json(path: Path, value: Any) -> None:
+    path.write_text(f"{json.dumps(value, indent=2)}\n")
+
+
+def secret_value(name: str) -> str | None:
+    try:
+        value = st.secrets.get(name)
+        return str(value) if value else None
+    except Exception:
+        return None
+
+
+def github_token() -> str | None:
+    return (
+        os.environ.get("EMMA_DASHBOARD_GITHUB_TOKEN")
+        or os.environ.get("GITHUB_TOKEN")
+        or secret_value("EMMA_DASHBOARD_GITHUB_TOKEN")
+        or secret_value("GITHUB_TOKEN")
+        or secret_value("github_token")
+    )
+
+
+def github_request(url: str, token: str, method: str = "GET", payload: dict[str, Any] | None = None) -> dict[str, Any]:
+    data = json.dumps(payload).encode("utf-8") if payload is not None else None
+    request = urllib.request.Request(
+        url,
+        data=data,
+        method=method,
+        headers={
+            "Authorization": f"Bearer {token}",
+            "Accept": "application/vnd.github+json",
+            "X-GitHub-Api-Version": "2022-11-28",
+            "Content-Type": "application/json",
+            "User-Agent": "emma-icu-job-search-dashboard",
+        },
+    )
+    with urllib.request.urlopen(request, timeout=20) as response:
+        return json.loads(response.read().decode("utf-8"))
+
+
+def commit_job_results_to_github(jobs: list[dict[str, Any]], token: str) -> None:
+    url = f"https://api.github.com/repos/{GITHUB_REPO}/contents/data/job-results.json?ref={GITHUB_BRANCH}"
+    current = github_request(url, token)
+    content = f"{json.dumps(jobs, indent=2)}\n"
+    payload = {
+        "message": "Update Emma job watching status",
+        "content": base64.b64encode(content.encode("utf-8")).decode("ascii"),
+        "sha": current["sha"],
+        "branch": GITHUB_BRANCH,
+    }
+    github_request(f"https://api.github.com/repos/{GITHUB_REPO}/contents/data/job-results.json", token, method="PUT", payload=payload)
+
+
+def set_job_status(job_id: str, status: str) -> tuple[bool, str]:
+    current_jobs = read_json(JOB_RESULTS_PATH, [])
+    updated = False
+    for job in current_jobs:
+        if job.get("id") == job_id:
+            job["status"] = status
+            updated = True
+            break
+
+    if not updated:
+        return False, "Could not find that role in the ledger."
+
+    try:
+        write_json(JOB_RESULTS_PATH, current_jobs)
+        if is_public_streamlit_cloud():
+            token = github_token()
+            if not token:
+                return False, "Watching changes need a GitHub write token in Streamlit secrets to persist."
+            commit_job_results_to_github(current_jobs, token)
+        return True, "Updated."
+    except urllib.error.HTTPError as error:
+        return False, f"GitHub did not accept the watching update: HTTP {error.code}."
+    except Exception as error:
+        return False, f"Could not save the watching change: {error}"
+
+
+def active_jobs(jobs: list[dict[str, Any]]) -> list[dict[str, Any]]:
+    return [job for job in jobs if job.get("status") != "archived"]
+
+
+def render_reason_pills(items: list[str], issue: bool = False) -> None:
+    if not items:
+        return
+    klass = "pill issue" if issue else "pill"
+    st.markdown("".join(f'<span class="{klass}">{item}</span>' for item in items), unsafe_allow_html=True)
+
+
+def render_job_card(job: dict[str, Any]) -> None:
+    with st.container(border=True):
+        title_col, watch_col = st.columns([0.78, 0.22], vertical_alignment="top")
+        with title_col:
+            title = job.get("title", "Untitled role")
+            url = job.get("url", "")
+            st.markdown(f"### [{title}]({url})" if url else f"### {title}")
+            st.caption(
+                f"{job.get('company', 'Unknown company')} · {job.get('location', 'Unknown location')} · "
+                f"Score {job.get('score', 0)} · Last checked {format_dt(job.get('lastSeenAt'))}"
+            )
+        with watch_col:
+            current_watching = job.get("status") == "watching"
+            desired_watching = st.checkbox("Watching", value=current_watching, key=f"watch_{job.get('id')}")
+            if desired_watching != current_watching:
+                ok, message = set_job_status(str(job.get("id")), "watching" if desired_watching else "new")
+                st.success("Moved to Watching.") if ok else st.error(message)
+                st.rerun()
+
+        render_reason_pills(job.get("reasons") or [])
+        render_reason_pills(job.get("concerns") or [], issue=True)
+        if job.get("notes"):
+            st.caption(str(job["notes"]))
+        st.caption(f"Source: {job.get('source', 'Unknown')}")
 
 
 st.set_page_config(
@@ -93,13 +208,6 @@ st.markdown(
         border: 1px solid #d9dfd8;
         border-radius: 8px;
         padding: 14px 16px;
-        background: #ffffff;
-    }
-    .job-card {
-        border: 1px solid #d9dfd8;
-        border-radius: 8px;
-        padding: 14px 16px;
-        margin-bottom: 12px;
         background: #ffffff;
     }
     .job-meta { color: #5d6a64; font-size: 0.92rem; margin-bottom: 6px; }
@@ -122,8 +230,10 @@ st.markdown(
 
 jobs, runs, app_state = load_data()
 latest_run = runs[0] if runs else None
-counts = status_counts(jobs)
 public_cloud = is_public_streamlit_cloud()
+visible_jobs = active_jobs(jobs)
+watching_jobs = [job for job in visible_jobs if job.get("status") == "watching"]
+tracked_jobs = [job for job in visible_jobs if job.get("status") != "watching"]
 
 st.title("Emma ICU Job Search Dashboard")
 st.caption("Public Streamlit dashboard reading Emma's checked-in job-search ledger.")
@@ -135,8 +245,9 @@ with st.sidebar:
 
     st.divider()
     if public_cloud:
-        st.link_button("Open public dashboard", PUBLIC_APP_URL, use_container_width=True)
         st.caption("Data updates when the job-search ledger is refreshed and pushed to GitHub.")
+        if not github_token():
+            st.caption("Watching changes require a GitHub write secret before they can persist.")
     else:
         if st.button("Run local scan", type="primary", use_container_width=True):
             with st.spinner("Running npm run scan:local..."):
@@ -150,15 +261,14 @@ with st.sidebar:
         st.code(f"http://{ip}:8501", language="text")
         st.caption("Leave this Mac awake and Streamlit running.")
 
-    st.divider()
-    st.caption(f"Ledger: `{JOB_RESULTS_PATH}`")
-    st.caption(f"Runs: `{JOB_RUNS_PATH}`")
+    if not public_cloud:
+        st.divider()
+        st.caption(f"Ledger: `{JOB_RESULTS_PATH}`")
+        st.caption(f"Runs: `{JOB_RUNS_PATH}`")
 
-metric_cols = st.columns(4)
-metric_cols[0].metric("Tracked roles", len(jobs))
-metric_cols[1].metric("New", counts.get("new", 0))
-metric_cols[2].metric("Watching", counts.get("watching", 0))
-metric_cols[3].metric("Latest run", format_dt(latest_run.get("ranAt") if latest_run else None))
+metric_cols = st.columns([1, 2])
+metric_cols[0].metric("Tracked roles", len(visible_jobs))
+metric_cols[1].metric("Latest run", format_dt(latest_run.get("ranAt") if latest_run else None))
 
 if latest_run:
     tone = "error" if latest_run.get("status") == "error" else "info"
@@ -168,66 +278,17 @@ if latest_run:
         f"Total tracked: {latest_run.get('totalTrackedJobs', len(jobs))}."
     )
 
-st.subheader("Results Ledger")
-
-filter_cols = st.columns([1.2, 1, 1, 1])
-query = filter_cols[0].text_input("Search title, company, location, notes", "")
-available_statuses = sorted({str(job.get("status", "unknown")) for job in jobs})
-statuses = filter_cols[1].multiselect("Status", available_statuses, default=available_statuses)
-min_score = filter_cols[2].slider("Minimum score", 0, 100, 0)
-sort_mode = filter_cols[3].selectbox("Sort", ["Score", "Newest seen", "Company"], index=0)
-
-filtered = []
-query_norm = query.strip().lower()
-for job in jobs:
-    haystack = " ".join(
-        str(job.get(field, ""))
-        for field in ["title", "company", "location", "source", "notes", "status"]
-    ).lower()
-    if query_norm and query_norm not in haystack:
-        continue
-    if statuses and str(job.get("status", "unknown")) not in statuses:
-        continue
-    if int(job.get("score", 0)) < min_score:
-        continue
-    filtered.append(job)
-
-if sort_mode == "Newest seen":
-    filtered.sort(key=lambda item: item.get("lastSeenAt", ""), reverse=True)
-elif sort_mode == "Company":
-    filtered.sort(key=lambda item: (item.get("company", ""), item.get("title", "")))
+st.subheader("Watching")
+if watching_jobs:
+    for job in watching_jobs:
+        render_job_card(job)
 else:
-    filtered.sort(key=lambda item: (-int(item.get("score", 0)), item.get("company", "")))
+    st.caption("No roles are marked Watching yet. Check Watching on any tracked role below to move it here.")
 
-st.caption(f"Showing {len(filtered)} of {len(jobs)} tracked roles.")
-
-for job in filtered:
-    with st.container():
-        st.markdown('<div class="job-card">', unsafe_allow_html=True)
-        title = job.get("title", "Untitled role")
-        url = job.get("url", "")
-        company = job.get("company", "Unknown company")
-        location = job.get("location", "Unknown location")
-        st.markdown(f"### [{title}]({url})" if url else f"### {title}")
-        st.markdown(
-            f'<div class="job-meta"><strong>{company}</strong> · {location} · '
-            f'Score {job.get("score", 0)} · {job.get("status", "unknown")} · '
-            f'Last seen {format_dt(job.get("lastSeenAt"))}</div>',
-            unsafe_allow_html=True,
-        )
-        reasons = job.get("reasons") or []
-        concerns = job.get("concerns") or []
-        if reasons:
-            st.markdown("".join(f'<span class="pill">{reason}</span>' for reason in reasons), unsafe_allow_html=True)
-        if concerns:
-            st.markdown(
-                "".join(f'<span class="pill issue">{concern}</span>' for concern in concerns),
-                unsafe_allow_html=True,
-            )
-        if job.get("notes"):
-            st.caption(str(job["notes"]))
-        st.markdown(f'<div class="small-muted">Source: {job.get("source", "Unknown")}</div>', unsafe_allow_html=True)
-        st.markdown("</div>", unsafe_allow_html=True)
+st.subheader("Tracked Roles")
+st.caption(f"Showing {len(tracked_jobs)} active tracked role{len(tracked_jobs) == 1 and '' or 's'}.")
+for job in tracked_jobs:
+    render_job_card(job)
 
 with st.expander("Run History", expanded=False):
     if not runs:
