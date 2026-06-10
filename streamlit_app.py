@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import json
+import os
 import socket
 import subprocess
 from datetime import datetime
@@ -15,6 +16,11 @@ DATA_DIR = ROOT / "data"
 JOB_RESULTS_PATH = DATA_DIR / "job-results.json"
 JOB_RUNS_PATH = DATA_DIR / "job-search-runs.json"
 APP_STATE_PATH = DATA_DIR / "app-state.json"
+PUBLIC_APP_URL = "https://emma-icu-job-search-dashboard.streamlit.app"
+
+
+def is_public_streamlit_cloud() -> bool:
+    return str(ROOT).startswith("/mount/src") or bool(os.environ.get("STREAMLIT_CLOUD"))
 
 
 def read_json(path: Path, fallback: Any) -> Any:
@@ -117,27 +123,32 @@ st.markdown(
 jobs, runs, app_state = load_data()
 latest_run = runs[0] if runs else None
 counts = status_counts(jobs)
+public_cloud = is_public_streamlit_cloud()
 
 st.title("Emma ICU Job Search Dashboard")
-st.caption("Private local Streamlit dashboard reading the existing job-search ledger.")
+st.caption("Public Streamlit dashboard reading Emma's checked-in job-search ledger.")
 
 with st.sidebar:
     st.header("Controls")
     st.write("Search area: **Dallas + roughly 50 miles**")
     st.caption("Includes nearby Dallas-area cities such as Fort Worth, Denton, McKinney, Waxahachie, Terrell, Burleson, and surrounding suburbs when official postings expose those locations.")
 
-    if st.button("Run local scan", type="primary", use_container_width=True):
-        with st.spinner("Running npm run scan:local..."):
-            ok, output = run_local_scan()
-        st.success("Scan completed.") if ok else st.error("Scan finished with source issues.")
-        st.code(output, language="text")
-        st.rerun()
-
     st.divider()
-    ip = local_ip()
-    st.write("Open from Emma's computer on the same Wi-Fi:")
-    st.code(f"http://{ip}:8501", language="text")
-    st.caption("Leave this Mac awake and Streamlit running.")
+    if public_cloud:
+        st.link_button("Open public dashboard", PUBLIC_APP_URL, use_container_width=True)
+        st.caption("Data updates when the job-search ledger is refreshed and pushed to GitHub.")
+    else:
+        if st.button("Run local scan", type="primary", use_container_width=True):
+            with st.spinner("Running npm run scan:local..."):
+                ok, output = run_local_scan()
+            st.success("Scan completed.") if ok else st.error("Scan finished with source issues.")
+            st.code(output, language="text")
+            st.rerun()
+
+        ip = local_ip()
+        st.write("Open from another computer on the same Wi-Fi:")
+        st.code(f"http://{ip}:8501", language="text")
+        st.caption("Leave this Mac awake and Streamlit running.")
 
     st.divider()
     st.caption(f"Ledger: `{JOB_RESULTS_PATH}`")
