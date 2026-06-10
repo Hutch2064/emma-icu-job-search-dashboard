@@ -1,0 +1,12 @@
+{
+  "automation": {
+    "id": "emma-icu-dfw-job-search-scan",
+    "name": "Emma ICU Dallas-Area Job Search Scan",
+    "enabled": true,
+    "codexAutomationPath": "/Users/aidanhutchison/.codex/automations/emma-icu-dfw-job-search-scan/automation.toml",
+    "automationFolderPath": "/Users/aidanhutchison/.codex/automations/emma-icu-dfw-job-search-scan",
+    "scheduleLabel": "Daily at 8:15 AM Central"
+  },
+  "contextPath": "/Users/aidanhutchison/Desktop/Emma Job Search/codex_career_context.md",
+  "resumePath": "/Users/aidanhutchison/Desktop/Emma Job Search/Emma Resume.docx"
+}

@@ -1,0 +1,149 @@
+[
+  {
+    "id": "scan-20260610003551",
+    "ranAt": "2026-06-10T00:35:51.562Z",
+    "status": "success",
+    "summary": "Found 1 new open Dallas 50-mile area ICU role across 1 official hospital boards.",
+    "newJobsCount": 1,
+    "totalTrackedJobs": 48,
+    "searchedSources": [
+      "Workday:Cook Children's"
+    ]
+  },
+  {
+    "id": "scan-20260506145415",
+    "ranAt": "2026-05-06T14:54:15.712Z",
+    "status": "error",
+    "summary": "Local scanner added 1 pediatric Cook Children's role, removed under today's no-pediatric rule. Manual official-source pass added 16 adult DFW ICU/critical-care roles. Source issues: local scanner remains pediatric-focused; HCA and CHRISTUS search results included stale/closed/non-DFW postings that were excluded; JPS and Prime/Scion searches did not expose current open adult DFW ICU RN matches.",
+    "newJobsCount": 16,
+    "totalTrackedJobs": 49,
+    "searchedSources": [
+      "Workday:Cook Children's local scanner",
+      "HCA Healthcare Careers / Medical City",
+      "Texas Health Careers",
+      "UT Southwestern Careers",
+      "Tenet Careers / Baylor Scott & White Medical Center - Sunnyvale",
+      "AdventHealth Careers / Texas Health Huguley and Mansfield",
+      "Methodist Health System Workday",
+      "Parkland Careers API/search",
+      "Baylor Scott & White Careers",
+      "JPS Health Network Careers",
+      "CHRISTUS Health Careers",
+      "Prime Healthcare Careers",
+      "ScionHealth / Kindred Careers"
+    ]
+  },
+  {
+    "id": "scan-20260505134104",
+    "ranAt": "2026-05-05T13:41:04.482Z",
+    "status": "error",
+    "summary": "Local scanner added 1 pediatric Cook Children's role, removed under today's no-pediatric rule. Manual official-source pass added 10 adult DFW ICU/critical-care roles. Source issues: JPS official jobs host failed SSL verification; UTSW official ICU pages found through search did not expose a visible active Apply path; several HCA and Baylor Scott & White indexed pages were stale/closed/non-DFW and excluded.",
+    "newJobsCount": 10,
+    "totalTrackedJobs": 36,
+    "searchedSources": [
+      "Workday:Cook Children's local scanner",
+      "HCA Healthcare Careers",
+      "Texas Health Careers",
+      "Methodist Health System Workday",
+      "Parkland Careers API",
+      "AdventHealth Careers / Texas Health Hospital Mansfield",
+      "Tenet Careers / Baylor Scott & White Medical Center - Sunnyvale",
+      "UT Southwestern Careers",
+      "Baylor Scott & White Careers",
+      "JPS Health Network Careers",
+      "CHRISTUS Health Careers",
+      "Prime Healthcare Careers",
+      "ScionHealth / Kindred Careers"
+    ]
+  },
+  {
+    "id": "scan-20260505131735",
+    "ranAt": "2026-05-05T13:17:35.984Z",
+    "status": "success",
+    "summary": "Found 1 new open DFW ICU role across 1 official hospital boards.",
+    "newJobsCount": 1,
+    "totalTrackedJobs": 27,
+    "searchedSources": [
+      "Workday:Cook Children's"
+    ]
+  },
+  {
+    "id": "scan-20260505014024",
+    "ranAt": "2026-05-05T01:40:24.000Z",
+    "status": "success",
+    "summary": "Local scanner found no new roles; manual official-source pass added 18 adult DFW ICU/critical-care roles and removed pediatric Cook Children's duplicate entries under today's no-pediatric rule. Source issues: Baylor Scott & White official results found only closed/non-DFW/PRN matches; UT Southwestern current residency timing was not compatible with Emma's December 2026 graduation and older ICU float links returned 404; several HCA/Parkland indexed pages were stale or inactive and were excluded.",
+    "newJobsCount": 18,
+    "totalTrackedJobs": 26,
+    "searchedSources": [
+      "Workday:Cook Children's local scanner",
+      "HCA Healthcare Careers",
+      "Texas Health Careers",
+      "Methodist Health System Workday",
+      "Parkland Careers API",
+      "UT Southwestern Careers",
+      "Baylor Scott & White Careers"
+    ]
+  },
+  {
+    "id": "scan-20260505013207",
+    "ranAt": "2026-05-05T01:32:07.856Z",
+    "status": "no_new_matches",
+    "summary": "Searched 1 official hospital boards and found no new open DFW ICU roles.",
+    "newJobsCount": 0,
+    "totalTrackedJobs": 10,
+    "searchedSources": [
+      "Workday:Cook Children's"
+    ]
+  },
+  {
+    "id": "scan-20260505012933",
+    "ranAt": "2026-05-05T01:29:33.235Z",
+    "status": "success",
+    "summary": "Found 1 new open DFW ICU role across 1 official hospital boards.",
+    "newJobsCount": 1,
+    "totalTrackedJobs": 9,
+    "searchedSources": [
+      "Workday:Cook Children's"
+    ]
+  },
+  {
+    "id": "scan-20260505011805",
+    "ranAt": "2026-05-05T01:18:05.000Z",
+    "status": "error",
+    "summary": "Local scanner found no new non-pediatric matches; manual official-board check added 8 adult DFW ICU/critical-care roles. Source issues: local scanner currently covers Cook Children's pediatric roles, which were excluded under today's no-pediatric rule; Methodist Workday and JPS official job detail feeds could not be fully verified; UT Southwestern showed no active apply path; Parkland and Baylor Scott & White official ICU pages checked were closed or unavailable.",
+    "newJobsCount": 8,
+    "totalTrackedJobs": 8,
+    "searchedSources": [
+      "Workday:Cook Children's",
+      "Texas Health Careers",
+      "HCA Healthcare Careers",
+      "UT Southwestern Careers",
+      "Methodist Health System Careers",
+      "Parkland Careers",
+      "Baylor Scott & White Careers",
+      "JPS Health Network Careers"
+    ]
+  },
+  {
+    "id": "scan-20260505011203",
+    "ranAt": "2026-05-05T01:12:03.196Z",
+    "status": "no_new_matches",
+    "summary": "Searched 1 official hospital boards and found no new open DFW ICU roles.",
+    "newJobsCount": 0,
+    "totalTrackedJobs": 2,
+    "searchedSources": [
+      "Workday:Cook Children's"
+    ]
+  },
+  {
+    "id": "scan-20260505010654",
+    "ranAt": "2026-05-05T01:06:54.656Z",
+    "status": "success",
+    "summary": "Found 1 new open DFW ICU role across 1 official hospital boards.",
+    "newJobsCount": 1,
+    "totalTrackedJobs": 1,
+    "searchedSources": [
+      "Workday:Cook Children's"
+    ]
+  }
+]

@@ -1,0 +1,8 @@
+node_modules/
+.next/
+.venv-streamlit/
+.local-tools/
+.playwright-cli/
+dist/
+coverage/
+.env*.local

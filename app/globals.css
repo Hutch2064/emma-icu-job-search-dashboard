@@ -1,0 +1,762 @@
+:root {
+  color-scheme: light;
+  --bg: #f5f7f4;
+  --panel: #ffffff;
+  --panel-soft: #f9faf7;
+  --text: #17201b;
+  --muted: #5d6a64;
+  --border: #d9dfd8;
+  --green: #167a4a;
+  --green-soft: #e7f4ec;
+  --blue: #245c88;
+  --blue-soft: #e6f0f7;
+  --amber: #9a6414;
+  --amber-soft: #f8eedc;
+  --red-soft: #f8e6e3;
+  --shadow: 0 18px 50px rgba(29, 38, 33, 0.08);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  min-height: 100%;
+}
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family:
+    Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  letter-spacing: 0;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+button {
+  font: inherit;
+}
+
+svg {
+  width: 18px;
+  height: 18px;
+  flex: 0 0 auto;
+}
+
+.shell {
+  width: min(1440px, calc(100% - 36px));
+  margin: 0 auto;
+  padding: 28px 0 44px;
+}
+
+.topbar {
+  align-items: flex-start;
+  display: flex;
+  gap: 24px;
+  justify-content: space-between;
+  padding: 8px 0 22px;
+}
+
+.topbar h1 {
+  font-size: clamp(2rem, 3vw, 3.35rem);
+  line-height: 1;
+  margin: 4px 0 12px;
+}
+
+.positioning {
+  color: var(--muted);
+  line-height: 1.55;
+  max-width: 940px;
+  margin: 0;
+}
+
+.eyebrow {
+  color: var(--blue);
+  font-size: 0.74rem;
+  font-weight: 800;
+  margin: 0;
+  text-transform: uppercase;
+}
+
+.topActions,
+.panelHeader,
+.sectionTitle,
+.metricRow,
+.jobRow,
+.runRow {
+  display: flex;
+}
+
+.topActions {
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 10px;
+  justify-content: flex-end;
+  min-width: 360px;
+}
+
+.primaryButton,
+.secondaryButton,
+.iconButton,
+.toggle {
+  align-items: center;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  cursor: pointer;
+  display: inline-flex;
+  font-weight: 750;
+  gap: 8px;
+  min-height: 42px;
+  transition:
+    background 140ms ease,
+    border-color 140ms ease,
+    transform 140ms ease;
+}
+
+.primaryButton {
+  background: var(--green);
+  border-color: var(--green);
+  color: #fff;
+  padding: 0 16px;
+}
+
+.secondaryButton,
+.iconButton {
+  background: #fff;
+  color: var(--text);
+}
+
+.secondaryButton {
+  padding: 0 14px;
+}
+
+.iconButton {
+  justify-content: center;
+  width: 42px;
+}
+
+.primaryButton:hover,
+.secondaryButton:hover,
+.iconButton:hover,
+.toggle:hover {
+  transform: translateY(-1px);
+}
+
+button:disabled {
+  cursor: not-allowed;
+  opacity: 0.62;
+  transform: none;
+}
+
+.statusGrid,
+.mainGrid,
+.wideGrid {
+  display: grid;
+  gap: 16px;
+}
+
+.scanNotice {
+  align-items: center;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  display: flex;
+  gap: 12px;
+  justify-content: space-between;
+  margin-bottom: 16px;
+  padding: 12px 14px;
+}
+
+.scanNotice strong {
+  font-size: 0.95rem;
+}
+
+.scanNotice span {
+  color: var(--muted);
+  font-size: 0.88rem;
+  line-height: 1.35;
+}
+
+.scanNotice.success {
+  background: var(--green-soft);
+  border-color: rgba(22, 122, 74, 0.25);
+}
+
+.scanNotice.neutral {
+  background: var(--blue-soft);
+  border-color: rgba(36, 92, 136, 0.22);
+}
+
+.scanNotice.error {
+  background: var(--red-soft);
+  border-color: rgba(160, 50, 38, 0.24);
+}
+
+.statusGrid {
+  grid-template-columns: minmax(0, 1.45fr) minmax(340px, 0.8fr);
+}
+
+.mainGrid {
+  grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr);
+  margin-top: 16px;
+}
+
+.wideGrid {
+  grid-template-columns: minmax(0, 1.1fr) minmax(360px, 0.9fr);
+  margin-top: 16px;
+}
+
+.bottomGrid {
+  align-items: start;
+}
+
+.panel {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  box-shadow: var(--shadow);
+  padding: 18px;
+}
+
+.automationPanel.good {
+  background: linear-gradient(0deg, var(--green-soft), #fff 58%);
+}
+
+.automationPanel.paused {
+  background: linear-gradient(0deg, var(--amber-soft), #fff 58%);
+}
+
+.automationPanel.unknown {
+  background: linear-gradient(0deg, var(--red-soft), #fff 58%);
+}
+
+.panelHeader {
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.panel h2 {
+  font-size: 1.15rem;
+  line-height: 1.28;
+  margin: 5px 0 0;
+}
+
+.toggle {
+  background: #fff;
+  min-width: 92px;
+  padding: 0 12px;
+}
+
+.toggle.on {
+  border-color: rgba(22, 122, 74, 0.35);
+  color: var(--green);
+}
+
+.toggle.off {
+  border-color: rgba(154, 100, 20, 0.38);
+  color: var(--amber);
+}
+
+.metricRow {
+  gap: 12px;
+  margin-top: 20px;
+}
+
+.metricRow div {
+  background: rgba(255, 255, 255, 0.7);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  flex: 1;
+  min-height: 76px;
+  padding: 12px;
+}
+
+.metricRow span,
+.profileList dt {
+  color: var(--muted);
+  display: block;
+  font-size: 0.78rem;
+  font-weight: 750;
+  margin-bottom: 5px;
+}
+
+.metricRow strong,
+.profileList dd {
+  font-size: 0.98rem;
+  margin: 0;
+}
+
+.codexRunStatus {
+  align-items: flex-start;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  margin-top: 12px;
+  padding: 11px 12px;
+}
+
+.codexRunStatus strong {
+  font-size: 0.82rem;
+  text-transform: uppercase;
+}
+
+.codexRunStatus span {
+  color: var(--muted);
+  font-size: 0.86rem;
+  line-height: 1.38;
+}
+
+.codexRunStatus.running {
+  background: var(--blue-soft);
+  border-color: rgba(36, 92, 136, 0.24);
+}
+
+.codexRunStatus.completed {
+  background: var(--green-soft);
+  border-color: rgba(22, 122, 74, 0.24);
+}
+
+.codexRunStatus.failed {
+  background: var(--red-soft);
+  border-color: rgba(160, 50, 38, 0.24);
+}
+
+.statusIcon {
+  color: var(--muted);
+  height: 28px;
+  width: 28px;
+}
+
+.goodIcon {
+  color: var(--green);
+}
+
+.pathText {
+  background: var(--panel-soft);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  color: var(--muted);
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  font-size: 0.78rem;
+  line-height: 1.45;
+  margin: 18px 0 0;
+  overflow-wrap: anywhere;
+  padding: 10px;
+}
+
+.runMeta {
+  color: var(--muted);
+  font-size: 0.86rem;
+  line-height: 1.4;
+  margin: 8px 0 0;
+}
+
+.sectionTitle {
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 16px;
+}
+
+.sectionTitle > svg {
+  color: var(--blue);
+  height: 24px;
+  width: 24px;
+}
+
+.profileList {
+  display: grid;
+  gap: 10px;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  margin: 0 0 14px;
+}
+
+.profileList div {
+  border-left: 3px solid var(--green);
+  padding-left: 10px;
+}
+
+.projectText {
+  color: var(--muted);
+  line-height: 1.55;
+  margin: 0 0 14px;
+}
+
+.resumeSignals {
+  display: grid;
+  gap: 8px;
+  margin-bottom: 14px;
+}
+
+.resumeSignals span {
+  background: var(--green-soft);
+  border-left: 3px solid var(--green);
+  border-radius: 8px;
+  color: var(--green);
+  font-size: 0.86rem;
+  font-weight: 760;
+  line-height: 1.35;
+  padding: 9px 10px;
+}
+
+.experienceList {
+  display: grid;
+  gap: 8px;
+  margin-bottom: 14px;
+}
+
+.experienceRow {
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 10px;
+}
+
+.experienceRow strong {
+  display: block;
+  font-size: 0.9rem;
+  margin-bottom: 3px;
+}
+
+.experienceRow p {
+  color: var(--muted);
+  font-size: 0.84rem;
+  line-height: 1.35;
+  margin: 0;
+}
+
+.tagGroup {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.tag {
+  background: var(--blue-soft);
+  border: 1px solid rgba(36, 92, 136, 0.18);
+  border-radius: 999px;
+  color: #214d70;
+  font-size: 0.78rem;
+  font-weight: 760;
+  line-height: 1.2;
+  padding: 7px 10px;
+}
+
+.tag.strong {
+  background: var(--green-soft);
+  border-color: rgba(22, 122, 74, 0.18);
+  color: var(--green);
+}
+
+.ruleColumns,
+.tagColumns {
+  display: grid;
+  gap: 14px;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.ruleColumns h3,
+.tagColumns h3 {
+  font-size: 0.92rem;
+  margin: 0 0 8px;
+}
+
+.ruleColumns ul {
+  color: var(--muted);
+  line-height: 1.48;
+  margin: 0;
+  padding-left: 18px;
+}
+
+.jobList,
+.scanMetricList,
+.runList {
+  display: grid;
+  gap: 10px;
+}
+
+.jobRow,
+.runRow {
+  align-items: center;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  gap: 12px;
+  min-height: 78px;
+  padding: 12px;
+}
+
+.jobRow,
+.scanMetric {
+  background: var(--panel-soft);
+}
+
+.jobRow:hover {
+  border-color: rgba(36, 92, 136, 0.38);
+}
+
+.score {
+  align-items: center;
+  background: var(--green);
+  border-radius: 8px;
+  color: #fff;
+  display: flex;
+  font-weight: 850;
+  height: 44px;
+  justify-content: center;
+  width: 50px;
+}
+
+.jobRow div:nth-child(2),
+.runRow div {
+  min-width: 0;
+  flex: 1;
+}
+
+.jobRow h3,
+.runRow h3 {
+  font-size: 0.95rem;
+  line-height: 1.25;
+  margin: 0 0 3px;
+}
+
+.jobRow p,
+.runRow p {
+  color: var(--muted);
+  font-size: 0.86rem;
+  line-height: 1.38;
+  margin: 0;
+}
+
+.jobRow span {
+  color: var(--blue);
+  display: block;
+  font-size: 0.78rem;
+  font-weight: 750;
+  margin-top: 6px;
+}
+
+.jobMeta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 8px;
+}
+
+.jobMeta em {
+  background: #fff;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  color: var(--muted);
+  font-size: 0.72rem;
+  font-style: normal;
+  font-weight: 760;
+  padding: 5px 8px;
+}
+
+.scanMetricList {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.scanMetric {
+  align-items: center;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  justify-content: center;
+  min-height: 82px;
+  padding: 12px;
+}
+
+.scanMetric span {
+  color: var(--muted);
+  font-size: 0.76rem;
+  font-weight: 760;
+  text-align: center;
+}
+
+.scanMetric strong {
+  color: var(--blue);
+  font-size: 1.42rem;
+}
+
+.scanSummaryText {
+  color: var(--muted);
+  font-size: 0.9rem;
+  line-height: 1.45;
+  margin: 14px 0 0;
+}
+
+.scanSummaryPanel {
+  display: flex;
+  flex-direction: column;
+}
+
+.sourceRows {
+  display: grid;
+  flex: 1;
+  gap: 7px;
+  grid-auto-rows: minmax(38px, 1fr);
+  grid-template-columns: 1fr;
+  margin-top: 14px;
+}
+
+.sourceRow {
+  align-items: center;
+  background: var(--panel-soft);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  display: flex;
+  gap: 10px;
+  font-weight: 780;
+  justify-content: space-between;
+  line-height: 1.25;
+  min-height: 38px;
+  padding: 8px 11px;
+  transition:
+    background 140ms ease,
+    border-color 140ms ease,
+    transform 140ms ease;
+}
+
+.sourceRow span {
+  color: var(--blue);
+  font-size: 0.78rem;
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+
+.sourceRow svg {
+  color: var(--blue);
+  width: 15px;
+  height: 15px;
+}
+
+.sourceRow:hover {
+  background: var(--blue-soft);
+  border-color: rgba(36, 92, 136, 0.28);
+  transform: translateX(2px);
+}
+
+.sourceRow.disabled {
+  background: var(--panel-soft);
+  color: var(--muted);
+  pointer-events: none;
+}
+
+.sourceRow.disabled span {
+  color: var(--muted);
+}
+
+.runRow strong {
+  color: var(--blue);
+  font-size: 0.78rem;
+  text-align: right;
+}
+
+.runRow {
+  background: #fff;
+}
+
+.runRow svg {
+  color: var(--green);
+}
+
+.emptyText {
+  background: var(--panel-soft);
+  border: 1px dashed var(--border);
+  border-radius: 8px;
+  color: var(--muted);
+  line-height: 1.5;
+  margin: 0;
+  padding: 20px;
+}
+
+.spin {
+  animation: spin 0.85s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@media (max-width: 980px) {
+  .topbar,
+  .panelHeader {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .topActions {
+    justify-content: flex-start;
+    min-width: 0;
+  }
+
+  .statusGrid,
+  .mainGrid,
+  .wideGrid,
+  .profileList,
+  .ruleColumns,
+  .tagColumns {
+    grid-template-columns: 1fr;
+  }
+
+  .metricRow {
+    flex-direction: column;
+  }
+
+  .scanNotice {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+}
+
+@media (min-width: 981px) {
+  .guardrailPanel {
+    grid-column: 1 / -1;
+  }
+}
+
+@media (max-width: 620px) {
+  .shell {
+    width: min(100% - 24px, 1440px);
+    padding-top: 18px;
+  }
+
+  .topActions {
+    display: grid;
+    grid-template-columns: 42px 1fr;
+    width: 100%;
+  }
+
+  .primaryButton {
+    grid-column: 1 / -1;
+    justify-content: center;
+  }
+
+  .secondaryButton {
+    justify-content: center;
+  }
+
+  .jobRow,
+  .runRow {
+    align-items: flex-start;
+  }
+
+  .scanMetricList {
+    grid-template-columns: 1fr;
+  }
+
+  .jobRow > svg {
+    display: none;
+  }
+}
