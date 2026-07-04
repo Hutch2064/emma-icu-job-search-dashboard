@@ -1,5 +1,16 @@
 [
   {
+    "id": "scan-20260704144437",
+    "ranAt": "2026-07-04T14:44:37.354Z",
+    "status": "error",
+    "summary": "Searched 1 official hospital boards and found no new open Dallas 50-mile area ICU roles. Revalidated 26 tracked listings. Source issues: Existing listing validation: Medical City Dallas - Surgical ICU Registered Nurse: Could not conclusively validate; HTTP 403; Existing listing validation: Medical City Plano - Neuro Surgical ICU Registered Nurse: Could not conclusively validate; HTTP 403; Existing listing validation: Medical City Dallas - Medical ICU Registered Nurse: Could not conclusively validate; HTTP 403; Existing listing validation: Medical City Fort Worth - Registered Nurse - Neuro Science ICU: Could not conclusively validate; HTTP 403; Existing listing validation: Medical City Heart & Spine Hospitals - Registered Nurse CVICU: Could not conclusively validate; HTTP 403; Existing listing validation: AdventHealth / Texas Health Hospital Mansfield - RN ICU Nights: Could not conclusively validate; HTTP 403; Existing listing validation: Medical City Alliance - RN ICU: Could not conclusively validate; HTTP 403; Existing listing validation: UT Southwestern Medical Center - Registered Nurse - Multispecialty ICU Nights $5K Bonus: Could not conclusively validate; HTTP 403; Existing listing validation: UT Southwestern Medical Center - Registered Nurse Surgical ICU Nights 5K Bonus: Could not conclusively validate; HTTP 403; Existing listing validation: Medical City Denton - RN CVICU: Could not conclusively validate; HTTP 403; Existing listing validation: Medical City Denton - RN Staff ICU: Could not conclusively validate; HTTP 403; Existing listing validation: Medical City Plano - CVICU - Registered Nurse: Could not conclusively validate; HTTP 403; Existing listing validation: Medical City Dallas - Registered Nurse - RN - Critical Care Super Pool: Could not conclusively validate; HTTP 403; Existing listing validation: Texas Health Resources - Registered Nurse RN - Resource/Float Pool - ICU/PCU - Full-Time, Nights: Could not conclusively validate; HTTP 403; Existing listing validation: AdventHealth / Texas Health Hospital Mansfield - RN Charge Nurse ICU - Nights: Could not conclusively validate; HTTP 403",
+    "newJobsCount": 0,
+    "totalTrackedJobs": 26,
+    "searchedSources": [
+      "Workday:Cook Children's"
+    ]
+  },
+  {
     "id": "scan-20260703152346",
     "ranAt": "2026-07-03T15:23:46.635Z",
     "status": "error",
