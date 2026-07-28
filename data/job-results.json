@@ -518,29 +518,6 @@
     "notes": "Verified through Methodist Workday CXS API: full time, requisition JR1000033505, Dallas. Older same-title requisition JR1000032343 was treated as duplicate and not added."
   },
   {
-    "id": "texas-health-fort-worth-resource-float-pool-icu-pcu-rn-26001019",
-    "title": "Registered Nurse RN - Resource/Float Pool - ICU/PCU - Full-Time, Nights",
-    "company": "Texas Health Resources",
-    "location": "Fort Worth, TX",
-    "url": "https://jobs.texashealth.org/job/22921585/registered-nurse-rn-resource-float-pool-icu-pcu-full-time-nights-fort-worth-tx/",
-    "score": 86,
-    "reasons": [
-      "Official Texas Health posting with Apply Now visible",
-      "ICU/PCU float title match",
-      "Registered nurse title match",
-      "Full-time nights, 36 hours weekly",
-      "DFW location fit"
-    ],
-    "concerns": [
-      "Float pool includes PCU coverage rather than a dedicated ICU unit"
-    ],
-    "firstSeenAt": "2026-05-05T01:18:05.000Z",
-    "lastSeenAt": "2026-05-05T01:40:24.000Z",
-    "status": "new",
-    "source": "Manual web check: Texas Health Careers",
-    "notes": "Verified on official posting: Apply Now visible, Job ID 26001019. Included because it is full-time and explicitly covers ICU/PCU resource pool staffing."
-  },
-  {
     "id": "adventhealth-texas-health-hospital-mansfield-rn-charge-nurse-icu-nights-https-jobs-adventhealth-",
     "title": "RN Charge Nurse ICU - Nights",
     "company": "AdventHealth / Texas Health Hospital Mansfield",
