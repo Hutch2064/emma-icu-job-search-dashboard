@@ -147,30 +147,6 @@
     "notes": "Verified through Methodist Workday CXS API: full time, 7p-7a, requisition JR1000032637, Mansfield."
   },
   {
-    "id": "tenet-bsw-sunnyvale-icu-registered-nurse-fulltime-nights-90400087168",
-    "title": "ICU Registered Nurse Fulltime Nights",
-    "company": "Baylor Scott & White Medical Center - Sunnyvale / Tenet",
-    "location": "Sunnyvale, TX",
-    "url": "https://jobs.tenethealth.com/job/sunnyvale/icu-registered-nurse-fulltime-nights/1127/90400087168",
-    "score": 96,
-    "reasons": [
-      "Official Tenet posting with Apply Now visible",
-      "ICU registered nurse title match",
-      "Full-time nights schedule",
-      "DFW/Sunnyvale location fit",
-      "Cardiac Specialty Unit direct-care description"
-    ],
-    "concerns": [
-      "Requires current Texas RN license and two or more years recent critical-care experience."
-    ],
-    "source": "Manual web check: Tenet Careers",
-    "notes": "Official Tenet posting for Baylor Scott & White Medical Center - Sunnyvale ICU RN full-time nights.",
-    "startDateFit": "Likely later-career fit unless experience requirement is waived.",
-    "firstSeenAt": "2026-05-06T17:23:50.028Z",
-    "lastSeenAt": "2026-05-06T17:23:50.028Z",
-    "status": "new"
-  },
-  {
     "id": "medical-city-alliance-rn-icu-3976924",
     "title": "RN ICU",
     "company": "Medical City Alliance",
