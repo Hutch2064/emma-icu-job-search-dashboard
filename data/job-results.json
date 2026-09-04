@@ -168,30 +168,6 @@
     "notes": "Verified on official posting: Apply visible, Job ID 3976924, Medical City Alliance ICU."
   },
   {
-    "id": "utsw-registered-nurse-multispecialty-icu-nights-2600005s",
-    "title": "Registered Nurse - Multispecialty ICU Nights $5K Bonus",
-    "company": "UT Southwestern Medical Center",
-    "location": "Dallas, TX",
-    "url": "https://jobs.utsouthwestern.edu/job/23090088/registered-nurse-multispecialty-icu-nights-5k-bonus-dallas-tx/",
-    "score": 96,
-    "reasons": [
-      "Official UT Southwestern posting with Taleo apply URL in page metadata",
-      "Adult multispecialty ICU title match",
-      "Full-time employee role",
-      "Dallas location fit",
-      "Academic medical center critical-care environment"
-    ],
-    "concerns": [
-      "Requires RN license and at least one year critical-care or ICU experience."
-    ],
-    "source": "Manual web check: UT Southwestern Careers",
-    "notes": "Verified official UTSW page metadata: Job Number 2600005S, is_posted true, external Taleo apply URL present.",
-    "startDateFit": "Likely later-career fit unless UTSW considers residency completion or equivalent ICU exposure.",
-    "firstSeenAt": "2026-05-06T17:23:50.028Z",
-    "lastSeenAt": "2026-05-06T17:23:50.028Z",
-    "status": "new"
-  },
-  {
     "id": "medical-city-denton-rn-cvicu-3851874",
     "title": "RN CVICU",
     "company": "Medical City Denton",
