@@ -1,5 +1,16 @@
 [
   {
+    "id": "scan-20260913165724",
+    "ranAt": "2026-09-13T16:57:24.925Z",
+    "status": "error",
+    "summary": "Searched 1 official hospital boards and found no new open Dallas 50-mile area ICU roles. Revalidated 21 tracked listings. Source issues: Existing listing validation: Medical City Dallas - Surgical ICU Registered Nurse: Could not conclusively validate; HTTP 403; Existing listing validation: Medical City Plano - Neuro Surgical ICU Registered Nurse: Could not conclusively validate; HTTP 403; Existing listing validation: Medical City Dallas - Medical ICU Registered Nurse: Could not conclusively validate; HTTP 403; Existing listing validation: Medical City Fort Worth - Registered Nurse - Neuro Science ICU: Could not conclusively validate; HTTP 403; Existing listing validation: Medical City Heart & Spine Hospitals - Registered Nurse CVICU: Could not conclusively validate; HTTP 403; Existing listing validation: Medical City Alliance - RN ICU: Could not conclusively validate; HTTP 403; Existing listing validation: Medical City Denton - RN CVICU: Could not conclusively validate; HTTP 403; Existing listing validation: Medical City Denton - RN Staff ICU: Could not conclusively validate; HTTP 403; Existing listing validation: Medical City Plano - CVICU - Registered Nurse: Could not conclusively validate; HTTP 403; Existing listing validation: Medical City Dallas - Registered Nurse - RN - Critical Care Super Pool: Could not conclusively validate; HTTP 403",
+    "newJobsCount": 0,
+    "totalTrackedJobs": 21,
+    "searchedSources": [
+      "Workday:Cook Children's"
+    ]
+  },
+  {
     "id": "scan-20260912161701",
     "ranAt": "2026-09-12T16:17:01.674Z",
     "status": "error",
@@ -1110,23 +1121,6 @@
     "totalTrackedJobs": 27,
     "searchedSources": [
       "Workday:Cook Children's"
-    ]
-  },
-  {
-    "id": "scan-20260505014024",
-    "ranAt": "2026-05-05T01:40:24.000Z",
-    "status": "success",
-    "summary": "Local scanner found no new roles; manual official-source pass added 18 adult DFW ICU/critical-care roles and removed pediatric Cook Children's duplicate entries under today's no-pediatric rule. Source issues: Baylor Scott & White official results found only closed/non-DFW/PRN matches; UT Southwestern current residency timing was not compatible with Emma's December 2026 graduation and older ICU float links returned 404; several HCA/Parkland indexed pages were stale or inactive and were excluded.",
-    "newJobsCount": 18,
-    "totalTrackedJobs": 26,
-    "searchedSources": [
-      "Workday:Cook Children's local scanner",
-      "HCA Healthcare Careers",
-      "Texas Health Careers",
-      "Methodist Health System Workday",
-      "Parkland Careers API",
-      "UT Southwestern Careers",
-      "Baylor Scott & White Careers"
     ]
   }
 ]
